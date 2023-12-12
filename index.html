@@ -1,0 +1,126 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orderly</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom right, #007AFF, #D353A6);
+            margin: 0; /* Remove default margin */
+        }
+        footer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        footer a:hover {
+            text-decoration: none;
+        }
+        .app-store-button {
+            background-color: white;
+            color: #000;
+            margin-left: 10px; /* Adjust spacing between buttons */
+        }
+        .button-container object {
+            height: 60px; /* Adjust as needed */
+            width: auto; /* Maintain aspect ratio */
+        }
+        .iphone-border {
+            width: 320px; /* Adjust based on your image size */
+            height: 670px; /* Adjust based on your image size */
+            border-radius: 30px; /* Rounded corners */
+            box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.7); /* Optional: Adds a shadow for depth */
+            background-color: black; /* iPhone color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .iphone-screenshot {
+            width: 300px;  /* Adjusted to fit within the border */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 20px; /* Slightly less rounded than the outer border */
+        }
+        .button-container {
+            display: flex; /* Aligns items in a row */
+            justify-content: center; /* Centers items horizontally */
+            align-items: center; /* Aligns items vertically */
+            margin-top: 50px;
+        }
+
+        /* .apple-badge object, .google-badge object {
+            height: 60px; 
+            width: auto; 
+        } */
+
+        .apple-badge img{
+            /* Custom size adjustments for Apple badge */
+            height: 60px; /* Adjust as needed */
+            width: auto; 
+            margin-right: 10px;
+        }
+
+        .google-badge img {
+            /* Custom size adjustments for Google Play badge */
+            height: 85px; /* Adjust as needed */
+            width: auto; 
+        }
+        .app-logo {
+            height: 55px;
+            width: auto;
+            border-radius: 55px;
+            margin-right: 10px;
+
+        }
+
+        /* .footer-background {
+            background-color: #007AFF;
+        } */
+    </style>
+</head>
+
+<body class="bg-purple-700 text-white">
+    <div class="container mx-auto px-4 py-12">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="./images/orderly_icon_white.jpg" alt="Orderly logo" class="app-logo">
+                <span class="text-3xl font-bold">Orderly</span>
+            </div>
+            <a href="https://instagram.com/orderlyinc" class="text-purple-200 hover:text-purple-100">Follow us on Instagram→</a>
+        </div>
+
+
+        <div class="text-center mt-16">
+            <h1 class="text-6xl font-bold">Every Order. Every Return. One App.</h1>
+            <div class="inline-flex button-container">
+                <a href="https://apps.apple.com/us/app/orderly-the-post-purchase-app/id6452804073" target="_blank" class="badge apple-badge">
+                    <img src="./images/apple-app-store-badge.svg" alt="Download on the App Store">
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.orderly.android" target="_blank" class="badge google-badge">
+                    <img src="./images/google-play-badge.png" alt="Download on the App Store">
+                </a>
+            </div>
+        </div>
+        
+
+        <div class="flex flex-col items-center mt-14">
+            <div class="iphone-border">
+                <img src="./images/homescreen.jpeg" alt="App Screenshot" class="iphone-screenshot">
+            </div>
+        </div>         
+    </div>
+    <footer class="text-center text-white footer-background py-6 mt-12">
+        <div class="mb-4">
+            <a href="mailto:contact@joinorderly.com" class="mx-2">Contact</a> | <!-- Replace #download with the actual link -->
+            <a href="http://policies.joinorderly.com/PrivacyPolicy.html" class="mx-2">Privacy Policy</a> | <!-- Replace #privacy-policy with the actual link -->
+            <a href="https://policies.joinorderly.com/TermsandConditions.html" class="mx-2">Terms & Conditions</a> <!-- Replace #terms-conditions with the actual link -->
+        </div>
+        <div>
+            Copyright © 2023 Orderly, Inc. - All Rights Reserved.
+        </div>
+    </footer>
+</body>
+</html>
