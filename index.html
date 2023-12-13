@@ -10,75 +10,85 @@
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(to bottom right, #007AFF, #D353A6);
-            margin: 0; /* Remove default margin */
+            margin: 0;
         }
         footer a {
             color: #fff;
             text-decoration: underline;
         }
-
         footer a:hover {
             text-decoration: none;
         }
         .app-store-button {
             background-color: white;
             color: #000;
-            margin-left: 10px; /* Adjust spacing between buttons */
+            margin-left: 10px;
         }
         .button-container object {
-            height: 60px; /* Adjust as needed */
-            width: auto; /* Maintain aspect ratio */
+            height: 60px;
+            width: auto;
         }
         .iphone-border {
-            width: 320px; /* Adjust based on your image size */
-            height: 670px; /* Adjust based on your image size */
-            border-radius: 30px; /* Rounded corners */
-            box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.7); /* Optional: Adds a shadow for depth */
-            background-color: black; /* iPhone color */
+            width: 320px;
+            height: 670px;
+            border-radius: 30px;
+            box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.7);
+            background-color: black;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         .iphone-screenshot {
-            width: 300px;  /* Adjusted to fit within the border */
-            height: auto; /* Maintain aspect ratio */
-            border-radius: 20px; /* Slightly less rounded than the outer border */
+            width: 300px;
+            height: auto;
+            border-radius: 20px;
         }
         .button-container {
-            display: flex; /* Aligns items in a row */
-            justify-content: center; /* Centers items horizontally */
-            align-items: center; /* Aligns items vertically */
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-top: 50px;
         }
-
-        /* .apple-badge object, .google-badge object {
-            height: 60px; 
-            width: auto; 
-        } */
-
-        .apple-badge img{
-            /* Custom size adjustments for Apple badge */
-            height: 60px; /* Adjust as needed */
-            width: auto; 
+        .apple-badge img {
+            height: 60px;
+            width: auto;
             margin-right: 10px;
         }
-
         .google-badge img {
-            /* Custom size adjustments for Google Play badge */
-            height: 85px; /* Adjust as needed */
-            width: auto; 
+            height: 85px;
+            width: auto;
         }
         .app-logo {
             height: 55px;
             width: auto;
             border-radius: 55px;
             margin-right: 10px;
-
         }
 
-        /* .footer-background {
-            background-color: #007AFF;
-        } */
+        /* Responsive Font Sizes */
+        h1 {
+            font-size: 4.5vw;
+        }
+        .text-3xl {
+            font-size: 2.5vw;
+        }
+
+        /* Media Queries for smaller screens */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 5.5vw;
+            }
+            .text-3xl {
+                font-size: 4vw;
+            }
+            .flex {
+                flex-direction: column;
+                align-items: center;
+            }
+            .app-logo, .text-3xl {
+                margin-bottom: 10px;
+            }
+        }
     </style>
 </head>
 
@@ -89,12 +99,14 @@
                 <img src="./images/orderly_icon_white.jpg" alt="Orderly logo" class="app-logo">
                 <span class="text-3xl font-bold">Orderly</span>
             </div>
-            <a href="https://instagram.com/orderly.app" class="text-purple-200 hover:text-purple-100">Follow us on Instagram→</a>
+            <a href="https://instagram.com/orderlyinc" class="text-purple-200 hover:text-purple-100">Follow us on Instagram→</a>
         </div>
 
 
         <div class="text-center mt-16">
-            <h1 class="text-6xl font-bold">Every Order. Every Return. One App.</h1>
+            <h1 class="text-5xl font-bold">Every Order.</h1>
+            <h1 class="text-5xl font-bold">Every Return.</h1>
+            <h1 class="text-5xl font-bold">One App.</h1>
             <div class="inline-flex button-container">
                 <a href="https://apps.apple.com/us/app/orderly-the-post-purchase-app/id6452804073" target="_blank" class="badge apple-badge">
                     <img src="./images/apple-app-store-badge.svg" alt="Download on the App Store">
