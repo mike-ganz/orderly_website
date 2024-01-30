@@ -24,7 +24,7 @@
 
         function signIn() {
         msalInstance.loginPopup({
-            scopes: ['openid', 'profile', 'email', 'Mail.Read']
+            scopes: ['openid', 'profile', 'email', 'Mail.Read', 'offline_access]
         }).then(authResponse => {
             document.getElementById('message').textContent = 'SUCCESS!';
             document.getElementById('jsonResponse').textContent = JSON.stringify(authResponse, null, 2);
