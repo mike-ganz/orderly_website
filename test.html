@@ -30,10 +30,10 @@
         // Generate Code Verifier and Code Challenge
         const codeVerifier = generateCodeVerifier();
         generateCodeChallenge(codeVerifier).then(codeChallenge => {
-            console.log(codeVerifier, ' || ', codeChallenge);
             document.getElementById('signInButton').addEventListener('click', function() {
                 window.location.href = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}&code_challenge_method=S256`;
             });
+        console.log(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}&code_challenge_method=S256`);
         });
 
         function handleAuthRedirect() {
@@ -41,8 +41,6 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const code = urlParams.get("code");
 
-                console.log(codeVerifier);
-                
                 fetch("https://xlw5-kd1n-crdj.n7c.xano.io/api:nC-c_soR/test", {
                     method: "POST",
                     headers: {
