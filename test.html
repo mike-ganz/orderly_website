@@ -4,24 +4,9 @@
     <meta charset="UTF-8">
     <title>Microsoft OAuth Demo</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 50px;
-        }
-
-        #signInButton {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        #message {
-            margin-top: 20px;
-            font-size: 20px;
-        }
+        /* Your CSS goes here */
     </style>
-    <script src="https://alcdn.msauth.net/browser/2.0.0-beta.4/js/msal-browser.js"></script>
+    <script src="https://alcdn.msftauth.net/browser/2.13.1/js/msal-browser.min.js"></script>
 </head>
 <body>
     <button id="signInButton">Sign In with Microsoft</button>
@@ -34,17 +19,18 @@
             }
         };
 
-        const myMSALObj = new Msal.UserAgentApplication(msalConfig);
+        const msalInstance = new msal.PublicClientApplication(msalConfig);
 
         function signIn() {
-            myMSALObj.loginPopup()
-                .then(loginResponse => {
-                    document.getElementById('message').textContent = 'SUCCESS!';
-                    // You can use loginResponse to get user info
-                }).catch(error => {
-                    document.getElementById('message').textContent = 'FAILED';
-                    console.error(error);
-                });
+            msalInstance.loginPopup({
+                scopes: ["user.read"] // Update scopes as necessary
+            }).then(authResult => {
+                document.getElementById('message').textContent = 'SUCCESS!';
+                console.log(authResult); // Here you will get the tokens/credentials
+            }).catch(error => {
+                document.getElementById('message').textContent = 'FAILED';
+                console.error(error);
+            });
         }
 
         document.getElementById('signInButton').addEventListener('click', signIn);
