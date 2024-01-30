@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Microsoft OAuth Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        #signInButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+    <script src="https://alcdn.msauth.net/browser/2.0.0-beta.4/js/msal-browser.js"></script>
+</head>
+<body>
+    <button id="signInButton">Sign In with Microsoft</button>
+    <p id="message"></p>
+    <script>
+        const msalConfig = {
+            auth: {
+                clientId: 'YOUR_CLIENT_ID', // Replace with your client ID
+                redirectUri: 'YOUR_REDIRECT_URI' // Replace with your redirect URI
+            }
+        };
+
+        const myMSALObj = new Msal.UserAgentApplication(msalConfig);
+
+        function signIn() {
+            myMSALObj.loginPopup()
+                .then(loginResponse => {
+                    document.getElementById('message').textContent = 'SUCCESS!';
+                    // You can use loginResponse to get user info
+                }).catch(error => {
+                    document.getElementById('message').textContent = 'FAILED';
+                    console.error(error);
+                });
+        }
+
+        document.getElementById('signInButton').addEventListener('click', signIn);
+    </script>
+</body>
+</html>
