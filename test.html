@@ -11,6 +11,7 @@
 <body>
     <button id="signInButton">Sign In with Microsoft</button>
     <p id="message"></p>
+    <p id="jsonResponse" style="white-space: pre-wrap;"></p>
     <script>
         const msalConfig = {
             auth: {
@@ -23,15 +24,13 @@
 
         function signIn() {
         msalInstance.loginPopup({
-            scopes: ['openid', 'profile', 'email', 'Mail.Read', 'offline_access'] // Include 'offline_access' for refresh token
+            scopes: ['openid', 'profile', 'email', 'Mail.Read']
         }).then(authResponse => {
-            document.getElementById('message').textContent = 'SUCCESS! Token: ' + authResponse.accessToken;
-            if (authResponse.refreshToken) {
-                document.getElementById('message').textContent = 'SUCCESS! Token: ' + authResponse.accessToken + '||| Refresh Token: ' + authResponse.refreshToken;
-            }
+            document.getElementById('message').textContent = 'SUCCESS!';
+            document.getElementById('jsonResponse').textContent = JSON.stringify(authResponse, null, 2);
         }).catch(error => {
-            document.getElementById('message').textContent = 'FAILED: ' + error.errorMessage;
-            console.error(error);
+            document.getElementById('message').textContent = 'FAILED';
+            document.getElementById('jsonResponse').textContent = JSON.stringify(error, null, 2);
         });
     }
 
