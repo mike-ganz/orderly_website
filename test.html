@@ -38,3 +38,49 @@
     </script>
 </body>
 </html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Microsoft OAuth</title>
+</head>
+<body>
+    <button id="signInButton">Log in with Microsoft</button>
+
+    <script>
+
+        const clientId = 'f8026b89-53cd-4208-ac5a-dec826820fad', // Replace with your client ID
+        const redirectUri = encodeURIComponent('https://www.joinorderly.com/test') // Replace with your redirect URI
+        const tenantId = 'f8cdef31-a31e-4b4a-93e4-5f571e91255a';
+        
+        document.getElementById('signInButton').addEventListener('click', function() {
+            // Replace with your Microsoft OAuth URL
+            window.location.href = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read`;
+        });
+
+        function handleAuthRedirect() {
+            if (window.location.search.includes("code=")) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const code = urlParams.get("code");
+
+                // Replace with your backend endpoint
+                fetch("http://yourbackend.com/auth-code", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ code: code })
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+            }
+        }
+
+        // Call this function when your SPA loads to check if it's a redirect with an authorization code
+        handleAuthRedirect();
+    </script>
+</body>
+</html>
