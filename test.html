@@ -22,15 +22,18 @@
         const msalInstance = new msal.PublicClientApplication(msalConfig);
 
         function signIn() {
-            msalInstance.loginPopup({
-                scopes: ['openid', 'profile', 'email', 'Mail.Read'] // Requested scopes
-            }).then(authResult => {
-                document.getElementById('message').textContent = 'SUCCESS! Token: ' + authResult.accessToken;
-            }).catch(error => {
-                document.getElementById('message').textContent = 'FAILED: ' + error.errorMessage;
-                console.error(error);
-            });
-        }
+        msalInstance.loginPopup({
+            scopes: ['openid', 'profile', 'email', 'Mail.Read', 'offline_access'] // Include 'offline_access' for refresh token
+        }).then(authResponse => {
+            document.getElementById('message').textContent = 'SUCCESS! Token: ' + authResponse.accessToken;
+            if (authResponse.refreshToken) {
+                console.log('Refresh Token:', authResponse.refreshToken);
+            }
+        }).catch(error => {
+            document.getElementById('message').textContent = 'FAILED: ' + error.errorMessage;
+            console.error(error);
+        });
+    }
 
         document.getElementById('signInButton').addEventListener('click', signIn);
     </script>
