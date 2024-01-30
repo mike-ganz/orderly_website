@@ -27,7 +27,7 @@
         }).then(authResponse => {
             document.getElementById('message').textContent = 'SUCCESS! Token: ' + authResponse.accessToken;
             if (authResponse.refreshToken) {
-                console.log('Refresh Token:', authResponse.refreshToken);
+                document.getElementById('message').textContent = 'SUCCESS! Token: ' + authResponse.accessToken + '||| Refresh Token: ' + authResponse.refreshToken;
             }
         }).catch(error => {
             document.getElementById('message').textContent = 'FAILED: ' + error.errorMessage;
