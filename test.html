@@ -23,12 +23,11 @@
 
         function signIn() {
             msalInstance.loginPopup({
-                scopes: ["user.read"] // Update scopes as necessary
+                scopes: ['openid', 'profile', 'email', 'Mail.Read'] // Requested scopes
             }).then(authResult => {
-                document.getElementById('message').textContent = 'SUCCESS!';
-                console.log(authResult); // Here you will get the tokens/credentials
+                document.getElementById('message').textContent = 'SUCCESS! Token: ' + authResult.accessToken;
             }).catch(error => {
-                document.getElementById('message').textContent = 'FAILED';
+                document.getElementById('message').textContent = 'FAILED: ' + error.errorMessage;
                 console.error(error);
             });
         }
