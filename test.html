@@ -6,6 +6,7 @@
 </head>
 <body>
     <button id="signInButton">Log in with Microsoft</button>
+    <div id="tokenResult"></div>
 
     <script>
         const clientId = 'f8026b89-53cd-4208-ac5a-dec826820fad'; // Replace with your client ID
@@ -19,49 +20,46 @@
             return Array.from(array, dec => ('0' + dec.toString(16)).substr(-2)).join('');
         }
 
-        async function generateCodeChallenge(codeVerifier) {
-            // const encoder = new TextEncoder();
-            // const data = encoder.encode(codeVerifier);
-            // const hash = await window.crypto.subtle.digest('SHA-256', data);
-            // const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(hash)));
-            // return base64String.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-
-            return codeVerifier;
-        }
-
-        // Generate Code Verifier and Code Challenge
+        // For plain method, codeChallenge is the same as codeVerifier
         const codeVerifier = generateCodeVerifier();
-        generateCodeChallenge(codeVerifier).then(codeChallenge => {
-            document.getElementById('signInButton').addEventListener('click', function() {
-                window.location.href = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}&code_challenge_method=plain`;
-            });
-            
-        console.log(codeVerifier, ' | ', codeChallenge);
-        console.log(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}&code_challenge_method=plain`);
+        const codeChallenge = codeVerifier;
 
-        if (codeVerifier === codeChallenge) {
-            console.log('CV and CC match!');
-        }
+        document.getElementById('signInButton').addEventListener('click', function() {
+            window.location.href = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}&code_challenge_method=plain`;
         });
 
         function handleAuthRedirect() {
             if (window.location.search.includes("code=")) {
                 const urlParams = new URLSearchParams(window.location.search);
-                const code = urlParams.get("code");
+                const authCode = urlParams.get("code");
 
-                fetch("https://xlw5-kd1n-crdj.n7c.xano.io/api:nC-c_soR/test", {
+                // Token exchange endpoint
+                const tokenUrl = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`;
+
+                // Prepare data for token exchange
+                const data = new URLSearchParams();
+                data.append('client_id', clientId);
+                data.append('code', authCode);
+                data.append('redirect_uri', decodeURIComponent(redirectUri));
+                data.append('grant_type', 'authorization_code');
+                data.append('code_verifier', codeVerifier);
+
+                // Exchange code for token
+                fetch(tokenUrl, {
                     method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: JSON.stringify({ 
-                        code: code,
-                        code_verifier: codeVerifier  // Send code verifier to your backend
-                    })
+                    body: data
                 })
                 .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(error => console.error('Error:', error));
+                .then(data => {
+                    document.getElementById('tokenResult').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('tokenResult').textContent = 'Error: ' + error;
+                });
             }
         }
 
@@ -69,3 +67,4 @@
     </script>
 </body>
 </html>
+
