@@ -33,11 +33,11 @@
         const codeVerifier = generateCodeVerifier();
         generateCodeChallenge(codeVerifier).then(codeChallenge => {
             document.getElementById('signInButton').addEventListener('click', function() {
-                window.location.href = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}`;
+                window.location.href = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}&code_challenge_method=plain`;
             });
             
         console.log(codeVerifier, ' | ', codeChallenge);
-        console.log(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}`);
+        console.log(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}&code_challenge_method=plain`);
 
         if (codeVerifier === codeChallenge) {
             console.log('CV and CC match!');
