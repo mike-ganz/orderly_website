@@ -22,7 +22,7 @@
         const codeVerifier = generateCodeVerifier();
         localStorage.setItem('codeVerifier', codeVerifier); // Store codeVerifier for later use
         
-        const codeChallenge = codeVerifier; // Direct assignment for plain method
+        const codeChallenge = encodeURIComponent(codeVerifier); // Direct assignment for plain method
 
         console.log('Code Verifier:', codeVerifier);
         console.log('Code Challenge:', codeChallenge);
