@@ -19,25 +19,34 @@
             return Array.from(array, dec => ('0' + dec.toString(16)).substr(-2)).join('');
         }
 
-        async function generateCodeChallenge(codeVerifier) {
-            // const encoder = new TextEncoder();
-            // const data = encoder.encode(codeVerifier);
-            // const hash = await window.crypto.subtle.digest('SHA-256', data);
-            // const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(hash)));
-            // return base64String.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        const codeVerifier = generateCodeVerifier();
+        const codeChallenge = codeVerifier; // Direct assignment for plain method
 
-            return codeVerifier;
-        }
+        console.log('Code Verifier:', codeVerifier);
+        console.log('Code Challenge:', codeChallenge);
+
+        document.getElementById('signInButton').addEventListener('click', function() {
+            window.location.href = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}&code_challenge_method=plain`;
+        });
+
+        console.log(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}&code_challenge_method=plain`);
+
+        // async function generateCodeChallenge(codeVerifier) {
+        //     const encoder = new TextEncoder();
+        //     const data = encoder.encode(codeVerifier);
+        //     const hash = await window.crypto.subtle.digest('SHA-256', data);
+        //     const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(hash)));
+        //     return base64String.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        // }
 
         // Generate Code Verifier and Code Challenge
-        const codeVerifier = generateCodeVerifier();
-        generateCodeChallenge(codeVerifier).then(codeChallenge => {
-            document.getElementById('signInButton').addEventListener('click', function() {
-                window.location.href = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}&code_challenge_method=plain`;
-            });
+        // const codeVerifier = generateCodeVerifier();
+        // generateCodeChallenge(codeVerifier).then(codeChallenge => {
+        //     document.getElementById('signInButton').addEventListener('click', function() {
+        //         window.location.href = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}&code_challenge_method=plain`;
+        //     });
             
-        console.log(codeVerifier, ' | ', codeChallenge);
-        console.log(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}&code_challenge_method=plain`);
+        
 
         if (codeVerifier === codeChallenge) {
             console.log('CV and CC match!');
