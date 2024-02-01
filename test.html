@@ -20,6 +20,8 @@
         }
 
         const codeVerifier = generateCodeVerifier();
+        localStorage.setItem('codeVerifier', codeVerifier); // Store codeVerifier for later use
+        
         const codeChallenge = codeVerifier; // Direct assignment for plain method
 
         console.log('Code Verifier:', codeVerifier);
@@ -56,6 +58,7 @@
             if (window.location.search.includes("code=")) {
                 const urlParams = new URLSearchParams(window.location.search);
                 const code = urlParams.get("code");
+                const storedCodeVerifier = localStorage.getItem('codeVerifier');
 
                 fetch("https://xlw5-kd1n-crdj.n7c.xano.io/api:nC-c_soR/test", {
                     method: "POST",
@@ -64,7 +67,7 @@
                     },
                     body: JSON.stringify({ 
                         code: code,
-                        code_verifier: codeVerifier  // Send code verifier to your backend
+                        code_verifier: storedCodeVerifier    // Send code verifier to your backend
                     })
                 })
                 .then(response => response.json())
