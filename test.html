@@ -42,6 +42,8 @@
         
 
         function handleAuthRedirect() {
+            console.log("handleAuthRedirect triggered");
+            
             if (window.location.search.includes("code=")) {
                 const urlParams = new URLSearchParams(window.location.search);
                 const code = urlParams.get("code");
