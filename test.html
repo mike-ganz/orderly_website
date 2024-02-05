@@ -22,16 +22,7 @@
         const codeVerifier = generateCodeVerifier();
         localStorage.setItem('codeVerifier', codeVerifier); // Store codeVerifier for later use
         
-        // const codeChallenge = encodeURIComponent(codeVerifier); // Direct assignment for plain method
-
-        console.log('Code Verifier:', codeVerifier);
-        // console.log('Code Challenge:', codeChallenge);
-
-        // document.getElementById('signInButton').addEventListener('click', function() {
-        //     window.location.href = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read User.Read&code_challenge=${codeChallenge}&code_challenge_method=plain`;
-        // });
-
-        // console.log(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read&code_challenge=${codeChallenge}&code_challenge_method=plain`);
+        // console.log('Code Verifier:', codeVerifier);
 
         async function generateCodeChallenge(codeVerifier) {
             const encoder = new TextEncoder();
@@ -48,36 +39,31 @@
                 window.location.href = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read User.Read&code_challenge=${codeChallenge}&code_challenge_method=S256`;
             });
         });
-            
         
 
-        // if (codeVerifier === codeChallenge) {
-        //     console.log('CV and CC match!');
-        // };
+        function handleAuthRedirect() {
+            if (window.location.search.includes("code=")) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const code = urlParams.get("code");
+                const storedCodeVerifier = localStorage.getItem('codeVerifier');
 
-        // function handleAuthRedirect() {
-        //     if (window.location.search.includes("code=")) {
-        //         const urlParams = new URLSearchParams(window.location.search);
-        //         const code = urlParams.get("code");
-        //         const storedCodeVerifier = localStorage.getItem('codeVerifier');
+                fetch("https://xlw5-kd1n-crdj.n7c.xano.io/api:nC-c_soR/continue", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        code: code,
+                        code_verifier: storedCodeVerifier    // Send code verifier to your backend
+                    })
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+            }
+        }
 
-        //         fetch("https://xlw5-kd1n-crdj.n7c.xano.io/api:nC-c_soR/continue", {
-        //             method: "POST",
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //             },
-        //             body: JSON.stringify({ 
-        //                 code: code,
-        //                 code_verifier: storedCodeVerifier    // Send code verifier to your backend
-        //             })
-        //         })
-        //         .then(response => response.json())
-        //         .then(data => console.log(data))
-        //         .catch(error => console.error('Error:', error));
-        //     }
-        // }
-
-        // handleAuthRedirect();
+        handleAuthRedirect();
     </script>
 </body>
 </html>
