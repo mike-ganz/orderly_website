@@ -19,11 +19,6 @@
             return Array.from(array, dec => ('0' + dec.toString(16)).substr(-2)).join('');
         }
 
-        const codeVerifier = generateCodeVerifier();
-        localStorage.setItem('codeVerifier', codeVerifier); // Store codeVerifier for later use
-        
-        console.log('Code Verifier:', codeVerifier);
-
         async function generateCodeChallenge(codeVerifier) {
             const encoder = new TextEncoder();
             const data = encoder.encode(codeVerifier);
@@ -32,23 +27,27 @@
             return base64String.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
         }
 
-        // Generate Code Verifier and Code Challenge
-        // const codeVerifier = generateCodeVerifier();
-        const storedCodeVerifier = localStorage.getItem('codeVerifier');
-        generateCodeChallenge(storedCodeVerifier).then(codeChallenge => {
-            document.getElementById('signInButton').addEventListener('click', function() {
-                window.location.href = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read User.Read&code_challenge=${codeChallenge}&code_challenge_method=S256`;
+        if (!window.location.search.includes("code=")) {
+            const codeVerifier = generateCodeVerifier();
+            localStorage.setItem('codeVerifier', codeVerifier); // Store codeVerifier for later use
+            
+            // console.log('Code Verifier:', codeVerifier);
+
+            // Generate Code Verifier and Code Challenge
+            const storedCodeVerifier = localStorage.getItem('codeVerifier');
+            generateCodeChallenge(storedCodeVerifier).then(codeChallenge => {
+                document.getElementById('signInButton').addEventListener('click', function() {
+                    window.location.href = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&response_mode=query&scope=openid email profile offline_access Mail.Read User.Read&code_challenge=${codeChallenge}&code_challenge_method=S256`;
+                });
             });
-        });
+    };
         
 
         function handleAuthRedirect() {
-
             if (window.location.search.includes("code=")) {
                 const urlParams = new URLSearchParams(window.location.search);
                 const code = urlParams.get("code");
                 const storedCodeVerifier = localStorage.getItem('codeVerifier');
-                console.log("storedCodeVerifier:", storedCodeVerifier);
 
                 const queryParams = new URLSearchParams({
                                     code: code,
