@@ -31,7 +31,7 @@
             const codeVerifier = generateCodeVerifier();
             localStorage.setItem('codeVerifier', codeVerifier); // Store codeVerifier for later use
             
-            // console.log('Code Verifier:', codeVerifier);
+            console.log('Code Verifier:', codeVerifier);
 
             // Generate Code Verifier and Code Challenge
             const storedCodeVerifier = localStorage.getItem('codeVerifier');
