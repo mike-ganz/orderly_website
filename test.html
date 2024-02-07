@@ -43,32 +43,32 @@
     };
         
 
-        function handleAuthRedirect() {
-            if (window.location.search.includes("code=")) {
-                const urlParams = new URLSearchParams(window.location.search);
-                const code = urlParams.get("code");
-                const storedCodeVerifier = localStorage.getItem('codeVerifier');
+        // function handleAuthRedirect() {
+        //     if (window.location.search.includes("code=")) {
+        //         const urlParams = new URLSearchParams(window.location.search);
+        //         const code = urlParams.get("code");
+        //         const storedCodeVerifier = localStorage.getItem('codeVerifier');
 
-                const queryParams = new URLSearchParams({
-                                    code: code,
-                                    code_verifier: storedCodeVerifier
-                                    }).toString();
+        //         const queryParams = new URLSearchParams({
+        //                             code: code,
+        //                             code_verifier: storedCodeVerifier
+        //                             }).toString();
 
-                const url = `https://xlw5-kd1n-crdj.n7c.xano.io/api:nC-c_soR/continue?${queryParams}`;
+        //         const url = `https://xlw5-kd1n-crdj.n7c.xano.io/api:nC-c_soR/continue?${queryParams}`;
 
-                fetch(url, {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(error => console.error('Error:', error));
-            }
-        }
+        //         fetch(url, {
+        //             method: "GET",
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //             }
+        //         })
+        //         .then(response => response.json())
+        //         .then(data => console.log(data))
+        //         .catch(error => console.error('Error:', error));
+        //     }
+        // }
 
-        handleAuthRedirect();
+        // handleAuthRedirect();
     </script>
 </body>
 </html>
